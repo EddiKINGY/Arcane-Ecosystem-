@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARCANE Ecosystem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'arcane-bg': '#0a091e',
+            'arcane-primary': '#2a205a',
+            'arcane-secondary': '#1e1642',
+            'arcane-accent': '#7e22ce',
+            'arcane-highlight': '#c084fc',
+            'arcane-text': '#e0e0e0',
+            'arcane-cyan': '#08d9d6',
+            'arcane-magenta': '#ff2e63',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Roboto Mono', 'monospace'],
+            serif: ['Lora', 'serif'],
+          },
+          animation: {
+            'gradient-x': 'gradient-x 15s ease infinite',
+            'fade-in': 'fade-in 1s ease-out forwards',
+            'slide-up': 'slide-up 0.5s ease-out forwards',
+          },
+          keyframes: {
+            'gradient-x': {
+              '0%, 100%': { 'background-position': '0% 50%' },
+              '50%': { 'background-position': '100% 50%' },
+            },
+            'fade-in': {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            'slide-up': {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+          }
+        }
+      }
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .crystalline-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glow-border {
+            position: relative;
+        }
+        .glow-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            border: 1px solid transparent;
+            background: linear-gradient(120deg, var(--tw-color-arcane-accent), var(--tw-color-arcane-cyan)) border-box;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) padding-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .roadmap-line::after {
+          content: '';
+          position: absolute;
+          left: 1.25rem;
+          top: 1.25rem;
+          bottom: 0;
+          width: 2px;
+          background-color: #3e3075;
+          transform: translateX(-50%);
+        }
+        .roadmap-item:last-child .roadmap-line::after {
+          display: none;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "recharts": "https://aistudiocdn.com/recharts@^3.2.1",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
