@@ -1,6 +1,15 @@
-
 export { default as BlockchainIcon } from './BlockchainIcon';
 export { default as CloudIcon } from './CloudIcon';
 export { default as AIIcon } from './AIIcon';
 export { default as AppsIcon } from './AppsIcon';
 export { default as GrowthIcon } from './GrowthIcon';
+export { default as SunIcon } from './SunIcon';
+export { default as MoonIcon } from './MoonIcon';
+export { default as CodeIcon } from './CodeIcon';
+export { default as BotIcon } from './BotIcon';
+export { default as SendIcon } from './SendIcon';
+export { default as CartIcon } from './CartIcon';
+export { default as ChatIcon } from './ChatIcon';
+export { default as HeartIcon } from './HeartIcon';
+export { default as BankIcon } from './BankIcon';
+export { default as BriefcaseIcon } from './BriefcaseIcon';

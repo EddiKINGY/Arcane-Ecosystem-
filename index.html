@@ -6,55 +6,69 @@
     <title>ARCANE Ecosystem</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'arcane-bg': '#0a091e',
-            'arcane-primary': '#2a205a',
-            'arcane-secondary': '#1e1642',
-            'arcane-accent': '#7e22ce',
-            'arcane-highlight': '#c084fc',
-            'arcane-text': '#e0e0e0',
-            'arcane-cyan': '#08d9d6',
-            'arcane-magenta': '#ff2e63',
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['Roboto Mono', 'monospace'],
-            serif: ['Lora', 'serif'],
-          },
-          animation: {
-            'gradient-x': 'gradient-x 15s ease infinite',
-            'fade-in': 'fade-in 1s ease-out forwards',
-            'slide-up': 'slide-up 0.5s ease-out forwards',
-          },
-          keyframes: {
-            'gradient-x': {
-              '0%, 100%': { 'background-position': '0% 50%' },
-              '50%': { 'background-position': '100% 50%' },
+      // Prevents "flash of incorrect theme" on page load
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+
+      tailwind.config = {
+        darkMode: 'class', // Enable class-based dark mode
+        theme: {
+          extend: {
+            colors: {
+              'arcane-bg': '#0a091e',
+              'arcane-primary': '#2a205a',
+              'arcane-secondary': '#1e1642',
+              'arcane-accent': '#7e22ce',
+              'arcane-highlight': '#c084fc',
+              'arcane-text': '#e0e0e0',
+              'arcane-cyan': '#08d9d6',
+              'arcane-magenta': '#ff2e63',
             },
-            'fade-in': {
-              '0%': { opacity: '0' },
-              '100%': { opacity: '1' },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['Roboto Mono', 'monospace'],
+              serif: ['Lora', 'serif'],
             },
-            'slide-up': {
-              '0%': { transform: 'translateY(20px)', opacity: '0' },
-              '100%': { transform: 'translateY(0)', opacity: '1' },
+            animation: {
+              'gradient-x': 'gradient-x 15s ease infinite',
+              'fade-in': 'fade-in 1s ease-out forwards',
+              'slide-up': 'slide-up 0.5s ease-out forwards',
             },
+            keyframes: {
+              'gradient-x': {
+                '0%, 100%': { 'background-position': '0% 50%' },
+                '50%': { 'background-position': '100% 50%' },
+              },
+              'fade-in': {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              'slide-up': {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+            }
           }
         }
       }
-    }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Light mode default */
         .crystalline-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        /* Dark mode styles */
+        .dark .crystalline-card {
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .glow-border {
@@ -85,12 +99,25 @@
           top: 1.25rem;
           bottom: 0;
           width: 2px;
-          background-color: #3e3075;
+          background-color: #e5e7eb; /* Light mode color */
           transform: translateX(-50%);
+        }
+        .dark .roadmap-line::after {
+          background-color: #3e3075; /* Dark mode color */
         }
         .roadmap-item:last-child .roadmap-line::after {
           display: none;
         }
+        /* AI Assistant Typing Indicator */
+        @keyframes typing-dot {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+        .typing-dot {
+            animation: typing-dot 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(2) { animation-delay: .2s; }
+        .typing-dot:nth-child(3) { animation-delay: .4s; }
     </style>
 <script type="importmap">
 {

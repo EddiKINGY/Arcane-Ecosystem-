@@ -23,3 +23,21 @@ export interface RoadmapPhase {
   duration: string;
   items: Sprint[];
 }
+
+export interface TokenPricePoint {
+    date: string;
+    price: number;
+}
+
+export interface Message {
+  text: string;
+  sender: 'user' | 'ai';
+}
+
+export interface EcosystemFeature {
+  name: string;
+  description: string;
+  icon: React.ComponentType<any>;
+  keyFeatures: string[];
+  techStack: string[];
+}

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { ROADMAP_DATA } from '../constants';
 import type { RoadmapPhase } from '../types';
@@ -38,27 +37,29 @@ const RoadmapPhaseItem: React.FC<{ phase: RoadmapPhase; index: number }> = ({ ph
     };
   }, []);
 
+  // By applying the animation to the entire item, we create a more cohesive and dynamic effect.
+  // The 'opacity-0' class ensures the item is hidden until the animation starts.
+  // Increased stagger delay (0.15s) and duration (0.7s) make the entrance feel more significant.
   return (
-    <div ref={ref} className={`roadmap-item flex items-start mb-12 transition-opacity duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+    <div 
+      ref={ref} 
+      className={`roadmap-item flex items-start mb-12 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}
+      style={{ animationDelay: `${index * 0.15}s`, animationDuration: '0.7s' }}
+    >
       <div className="relative roadmap-line">
-        <div className="w-10 h-10 bg-arcane-primary rounded-full flex items-center justify-center ring-4 ring-arcane-bg">
-          <span className="font-mono font-bold text-white">{phase.sprints}</span>
+        <div className="w-10 h-10 bg-gray-200 dark:bg-arcane-primary rounded-full flex items-center justify-center ring-4 ring-gray-50 dark:ring-arcane-bg">
+          <span className="font-mono font-bold text-gray-900 dark:text-white">{phase.sprints}</span>
         </div>
       </div>
       <div className="ml-8 w-full">
-        <Card 
-          isGlow={true} 
-          className={isVisible ? 'animate-slide-up' : ''} 
-          // Adjust timing for a more dynamic, staggered feel.
-          style={{ animationDelay: `${index * 0.1}s`, animationDuration: '0.6s' }}
-        >
+        <Card isGlow={true}>
           <p className="absolute -top-4 -left-4 bg-arcane-accent text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
             {phase.duration}
           </p>
           {phase.items.map(item => (
             <div key={item.title}>
-              <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
-              <ul className="space-y-2 list-disc list-inside text-gray-300">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{item.title}</h3>
+              <ul className="space-y-2 list-disc list-inside text-gray-600 dark:text-gray-300">
                 {item.tasks.map(task => (
                   <li key={task} className="flex items-start">
                     <svg className="w-4 h-4 mr-2 mt-1 text-arcane-cyan flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>

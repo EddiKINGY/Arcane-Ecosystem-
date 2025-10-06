@@ -3,8 +3,8 @@ import { TOKENOMICS_DATA, ROADMAP_DATA } from '../constants';
 
 const WhitepaperSection: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <section className="mb-10">
-    <h2 className="font-serif text-3xl font-bold text-arcane-highlight border-b-2 border-arcane-primary pb-2 mb-4">{title}</h2>
-    <div className="space-y-4 text-gray-300 leading-relaxed">
+    <h2 className="font-serif text-3xl font-bold text-arcane-accent dark:text-arcane-highlight border-b-2 border-gray-200 dark:border-arcane-primary pb-2 mb-4">{title}</h2>
+    <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
       {children}
     </div>
   </section>
@@ -12,7 +12,7 @@ const WhitepaperSection: React.FC<{ title: string; children: React.ReactNode }> 
 
 const Whitepaper: React.FC = () => {
   return (
-    <div className="p-8 sm:p-12 font-sans text-arcane-text">
+    <div className="p-8 sm:p-12 font-sans text-gray-900 dark:text-arcane-text">
       <header className="text-center mb-12">
         <div className="flex items-center justify-center space-x-3 mb-4">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,9 +20,9 @@ const Whitepaper: React.FC = () => {
               <path d="M2 17L12 22L22 17" stroke="#c084fc" strokeWidth="2" strokeLinejoin="round"/>
               <path d="M2 12L12 17L22 12" stroke="#c084fc" strokeWidth="2" strokeLinejoin="round"/>
             </svg>
-            <h1 className="text-4xl font-bold tracking-wider text-white">ARCANE</h1>
+            <h1 className="text-4xl font-bold tracking-wider text-gray-900 dark:text-white">ARCANE</h1>
         </div>
-        <p className="text-xl font-serif text-gray-400">Ecosystem Whitepaper v0.1.0</p>
+        <p className="text-xl font-serif text-gray-600 dark:text-gray-400">Ecosystem Whitepaper v0.2.0</p>
       </header>
 
       <WhitepaperSection title="1. Abstract">
@@ -48,7 +48,7 @@ const Whitepaper: React.FC = () => {
         <div className="overflow-x-auto">
             <table className="w-full text-left crystalline-card">
                 <thead>
-                    <tr className="border-b border-arcane-primary">
+                    <tr className="border-b border-gray-200 dark:border-arcane-primary">
                         <th className="p-3">Category</th>
                         <th className="p-3">%</th>
                         <th className="p-3">Tokens</th>
@@ -57,11 +57,11 @@ const Whitepaper: React.FC = () => {
                 </thead>
                 <tbody>
                     {TOKENOMICS_DATA.map(item => (
-                        <tr key={item.name} className="border-b border-arcane-secondary/50">
+                        <tr key={item.name} className="border-b border-gray-200/50 dark:border-arcane-secondary/50">
                             <td className="p-3 font-semibold" style={{color: item.fill}}>{item.name}</td>
                             <td className="p-3">{item.value}%</td>
                             <td className="p-3">{item.tokens}</td>
-                            <td className="p-3 text-sm text-gray-400">{item.notes}</td>
+                            <td className="p-3 text-sm text-gray-600 dark:text-gray-400">{item.notes}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -72,8 +72,8 @@ const Whitepaper: React.FC = () => {
        <WhitepaperSection title="4. Development Roadmap">
         {ROADMAP_DATA.map(phase => (
             <div key={phase.sprints} className="mb-6">
-                <h3 className="text-xl font-bold text-white">Sprints {phase.sprints} ({phase.duration}) - {phase.items[0].title}</h3>
-                <ul className="list-disc list-inside pl-4 mt-2 text-gray-400">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Sprints {phase.sprints} ({phase.duration}) - {phase.items[0].title}</h3>
+                <ul className="list-disc list-inside pl-4 mt-2 text-gray-600 dark:text-gray-400">
                     {phase.items[0].tasks.map(task => (
                         <li key={task}>{task}</li>
                     ))}
@@ -82,11 +82,11 @@ const Whitepaper: React.FC = () => {
         ))}
       </WhitepaperSection>
       
-      <footer className="text-center mt-12 pt-8 border-t border-arcane-primary">
+      <footer className="text-center mt-12 pt-8 border-t border-gray-200 dark:border-arcane-primary">
         <button className="bg-arcane-accent hover:bg-purple-600 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-300 hover:scale-105 shadow-lg shadow-arcane-accent/30 mb-4">
             Download PDF
         </button>
-        <p className="text-gray-500 text-sm">ARCANE Ecosystem &copy; 2024. All Rights Reserved.</p>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">ARCANE Ecosystem &copy; 2024. All Rights Reserved.</p>
       </footer>
     </div>
   );

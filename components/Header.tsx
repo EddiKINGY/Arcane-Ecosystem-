@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import { NAV_LINKS } from '../constants';
+import ThemeToggle from './ThemeToggle';
 
 const Header: React.FC = () => {
   const [activeLink, setActiveLink] = useState('Ecosystem');
@@ -23,26 +23,31 @@ const Header: React.FC = () => {
               <path d="M2 17L12 22L22 17" stroke="#c084fc" strokeWidth="2" strokeLinejoin="round"/>
               <path d="M2 12L12 17L22 12" stroke="#c084fc" strokeWidth="2" strokeLinejoin="round"/>
             </svg>
-            <h1 className="text-2xl font-bold tracking-wider text-white">ARCANE</h1>
+            <h1 className="text-2xl font-bold tracking-wider text-gray-900 dark:text-white">ARCANE</h1>
           </div>
-          <nav className="hidden md:flex items-center space-x-8">
-            {NAV_LINKS.map((link) => (
-              <button
-                key={link}
-                onClick={() => scrollToSection(link)}
-                className={`text-sm font-medium transition-colors duration-300 ${
-                  activeLink === link
-                    ? 'text-arcane-highlight'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                {link}
+          <div className="flex items-center space-x-6">
+            <nav className="hidden md:flex items-center space-x-8">
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link}
+                  onClick={() => scrollToSection(link)}
+                  className={`text-sm font-medium transition-colors duration-300 ${
+                    activeLink === link
+                      ? 'text-arcane-accent dark:text-arcane-highlight'
+                      : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
+                  }`}
+                >
+                  {link}
+                </button>
+              ))}
+            </nav>
+            <div className="hidden md:flex items-center space-x-4">
+              <ThemeToggle />
+              <button className="bg-arcane-accent hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg transition-transform duration-300 hover:scale-105">
+                Launch App
               </button>
-            ))}
-          </nav>
-          <button className="hidden md:block bg-arcane-accent hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg transition-transform duration-300 hover:scale-105">
-            Launch App
-          </button>
+            </div>
+          </div>
         </div>
       </div>
     </header>
