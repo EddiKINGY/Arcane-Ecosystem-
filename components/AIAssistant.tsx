@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { Message } from '../types';
-import { BotIcon, SendIcon } from './icons';
+import { BotIcon, SendIcon, CrownIcon } from './icons';
 
 const AIAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,21 +17,51 @@ const AIAssistant: React.FC = () => {
 
   useEffect(scrollToBottom, [messages, isTyping]);
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const getAIResponse = async (message: string): Promise<Message> => {
+    // Simulate premium feature check
+    if (/(market analysis|predictive modeling|enterprise solution)/i.test(message)) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return {
+        text: "This feature requires an AI Co-Founder Premium subscription. Premium gives you access to advanced analytics, predictive modeling, and automated workflow integrations. Would you like to learn more about upgrading?",
+        sender: 'ai',
+      };
+    }
+
+    try {
+      const response = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      return { text: data.reply || "Sorry, I couldn't get a response.", sender: 'ai' };
+
+    } catch (error) {
+      console.error('Failed to fetch AI response:', error);
+      return { text: "Sorry, I'm having trouble connecting. Please try again later.", sender: 'ai' };
+    }
+  };
+
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (inputValue.trim() === '') return;
+    if (inputValue.trim() === '' || isTyping) return;
 
     const userMessage: Message = { text: inputValue, sender: 'user' };
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = inputValue;
     setInputValue('');
     setIsTyping(true);
-
-    // Simulate AI response with a delay and typing indicator
-    setTimeout(() => {
-      const aiResponse: Message = { text: "Thank you for your question. As this is a demo, I'm providing a placeholder response. In a live environment, I would connect to the ARCANE AI layer to provide a detailed answer.", sender: 'ai' };
-      setMessages(prev => [...prev, aiResponse]);
-      setIsTyping(false);
-    }, 1500);
+    
+    const aiResponse = await getAIResponse(currentInput);
+    setMessages(prev => [...prev, aiResponse]);
+    setIsTyping(false);
   };
 
   return (
@@ -54,7 +84,13 @@ const AIAssistant: React.FC = () => {
               <BotIcon className="w-8 h-8 text-arcane-highlight" />
               <div>
                 <h3 className="font-bold text-lg text-gray-900 dark:text-white">AI Co-Founder</h3>
-                <p className="text-sm text-green-400">● Online</p>
+                <div className="flex items-center gap-1.5">
+                    <p className="text-sm text-green-400">● Online</p>
+                    <div className="flex items-center gap-1 text-xs font-bold bg-yellow-400/20 text-yellow-300 px-2 py-0.5 rounded-full">
+                        <CrownIcon className="w-3 h-3" />
+                        Premium Available
+                    </div>
+                </div>
               </div>
             </div>
             <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-white" aria-label="Close chat">
@@ -68,7 +104,7 @@ const AIAssistant: React.FC = () => {
               <div key={index} className={`flex items-end gap-2 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                 {msg.sender === 'ai' && <BotIcon className="w-6 h-6 text-arcane-highlight flex-shrink-0 mb-1" />}
                 <div className={`max-w-xs md:max-w-sm px-4 py-2 rounded-2xl ${msg.sender === 'user' ? 'bg-arcane-accent text-white rounded-br-none' : 'bg-gray-200 dark:bg-arcane-secondary text-gray-900 dark:text-white rounded-bl-none'}`}>
-                  <p className="text-sm">{msg.text}</p>
+                  <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
                 </div>
               </div>
             ))}
@@ -97,8 +133,9 @@ const AIAssistant: React.FC = () => {
                 placeholder="Ask about ARCANE..."
                 className="w-full bg-gray-200 dark:bg-arcane-primary border-transparent focus:border-arcane-accent focus:ring-arcane-accent rounded-lg text-sm px-4 py-2"
                 aria-label="Chat input"
+                disabled={isTyping}
               />
-              <button type="submit" className="bg-arcane-accent hover:bg-purple-600 text-white p-2.5 rounded-full transition-colors" aria-label="Send message">
+              <button type="submit" className="bg-arcane-accent hover:bg-purple-600 text-white p-2.5 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Send message" disabled={isTyping}>
                 <SendIcon className="w-5 h-5" />
               </button>
             </form>

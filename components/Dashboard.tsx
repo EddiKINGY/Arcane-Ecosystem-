@@ -8,15 +8,36 @@ import Whitepaper from './Whitepaper';
 import TechnicalArchitecture from './TechnicalArchitecture';
 import ExploreEcosystem from './ExploreEcosystem';
 import TechPill from './TechPill';
-import { BlockchainIcon, CloudIcon, AIIcon, AppsIcon, GrowthIcon, CodeIcon } from './icons';
+import WelcomeBanner from './WelcomeBanner';
+import TatashiMarket from './TatashiMarket';
+import ArcaneCloud from './ArcaneCloud';
+import Header from './Header';
+import UserProfile from './UserProfile';
+import Settings from './Settings';
+import AdminPanel from './AdminPanel';
+import DatingModule from './DatingModule';
+import MessengerPreview from './MessengerPreview';
+import { BlockchainIcon, CloudIcon, AIIcon, GrowthIcon, CodeIcon, CartIcon, HeartIcon, ChatIcon } from './icons';
 
 const Dashboard: React.FC = () => {
   const [isWhitepaperOpen, setIsWhitepaperOpen] = useState(false);
   const [isTechDocsOpen, setIsTechDocsOpen] = useState(false);
   const [isEcosystemOpen, setIsEcosystemOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+
+  const openSettings = () => {
+    setIsProfileOpen(false);
+    setIsSettingsOpen(true);
+  };
 
   return (
     <>
+      <Header 
+        onProfileClick={() => setIsProfileOpen(true)}
+        onAdminClick={() => setIsAdminOpen(true)} 
+      />
       <div className="container mx-auto py-10">
         <div className="text-center animate-fade-in py-20">
           <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 dark:text-white leading-tight tracking-tighter">
@@ -50,39 +71,43 @@ const Dashboard: React.FC = () => {
               </button>
           </div>
         </div>
+        
+        <WelcomeBanner />
 
         <Section 
           id="ecosystem"
-          title="The ARCANE Ecosystem"
-          subtitle="A unified platform for the next generation of digital interaction, built on a foundation of decentralization and intelligent automation."
-          icon={<AppsIcon />}
+          title="TatashiMarket"
+          subtitle="Our decentralized marketplace now includes SaaS hosting alongside goods, services, and travel."
+          icon={<CartIcon className="h-6 w-6 text-arcane-highlight" />}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <Card isGlow>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">TatashiMarket</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">A decentralized marketplace for goods, services, travel, and vendor SaaS hosting, powered by ARC tokens.</p>
-              </Card>
-              <Card isGlow>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">Secure Messenger</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">Signal Protocol-based messaging with P2P Bluetooth mesh for resilient, private communication.</p>
-              </Card>
-              <Card isGlow>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">Dating & Social</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">AI-driven matching and recommendations via the Rexy algorithm, ensuring privacy and security.</p>
-              </Card>
-              <Card isGlow>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">Decentralized Finance</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">Stake ARC tokens, manage cloud credits, and access DeFi services like borrowing and travel financing.</p>
-              </Card>
-              <Card isGlow>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">Business Tools</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">An integrated suite including a CRM, analytics, and a marketplace for 3rd-party SaaS applications.</p>
-              </Card>
-              <Card isGlow>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">ARCANE Cloud</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">Hybrid and edge compute/storage resources, billed in ARC, powering the entire ecosystem.</p>
-              </Card>
-          </div>
+          <TatashiMarket />
+        </Section>
+        
+        <Section 
+          id="dating"
+          title="Dating Module v1"
+          subtitle="Discover connections with our AI-powered social discovery platform, powered by the Rexy algorithm."
+          icon={<HeartIcon className="h-6 w-6 text-arcane-highlight" />}
+        >
+          <DatingModule />
+        </Section>
+
+        <Section 
+          id="messenger"
+          title="Secure Messenger"
+          subtitle="An enhanced preview of our Signal-protocol based messenger, now with group and file sharing capabilities."
+          icon={<ChatIcon className="h-6 w-6 text-arcane-highlight" />}
+        >
+          <MessengerPreview />
+        </Section>
+
+        <Section 
+          id="cloud"
+          title="ARCANE Cloud Status"
+          subtitle="A real-time overview of our foundational infrastructure, now featuring hybrid cloud connections."
+          icon={<CloudIcon />}
+        >
+          <ArcaneCloud />
         </Section>
         
         <Section
@@ -158,6 +183,15 @@ const Dashboard: React.FC = () => {
       </Modal>
       <Modal isOpen={isEcosystemOpen} onClose={() => setIsEcosystemOpen(false)}>
         <ExploreEcosystem />
+      </Modal>
+      <Modal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)}>
+        <UserProfile onOpenSettings={openSettings} />
+      </Modal>
+      <Modal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)}>
+        <Settings />
+      </Modal>
+      <Modal isOpen={isAdminOpen} onClose={() => setIsAdminOpen(false)}>
+        <AdminPanel />
       </Modal>
     </>
   );

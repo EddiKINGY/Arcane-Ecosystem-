@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { NAV_LINKS } from '../constants';
 import ThemeToggle from './ThemeToggle';
+import { UserIcon, AdminIcon } from './icons';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+    onProfileClick: () => void;
+    onAdminClick: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onProfileClick, onAdminClick }) => {
   const [activeLink, setActiveLink] = useState('Ecosystem');
 
   const scrollToSection = (id: string) => {
@@ -43,6 +49,20 @@ const Header: React.FC = () => {
             </nav>
             <div className="hidden md:flex items-center space-x-4">
               <ThemeToggle />
+               <button
+                onClick={onAdminClick}
+                className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-arcane-primary"
+                aria-label="Open admin panel"
+              >
+                  <AdminIcon className="w-6 h-6" />
+              </button>
+              <button
+                onClick={onProfileClick}
+                className="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-arcane-primary"
+                aria-label="Open user profile"
+              >
+                  <UserIcon className="w-6 h-6" />
+              </button>
               <button className="bg-arcane-accent hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg transition-transform duration-300 hover:scale-105">
                 Launch App
               </button>
